@@ -2,6 +2,7 @@ package com.aivideo.common;
 
 import com.aivideo.ai.AiException;
 import com.aivideo.common.exception.BadRequestException;
+import com.aivideo.voice.VoiceException;
 import com.aivideo.common.exception.ResourceNotFoundException;
 import com.aivideo.media.StorageException;
 import com.aivideo.source.VideoUploadException;
@@ -61,6 +62,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AiException.class)
     public ResponseEntity<ApiError> handleAi(AiException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
+    }
+
+    @ExceptionHandler(VoiceException.class)
+    public ResponseEntity<ApiError> handleVoice(VoiceException ex) {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                 .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
     }

@@ -49,6 +49,15 @@ app:
   content:
     prompt-version: ${CONTENT_PROMPT_VERSION:1}
     language: vi
+  tts:
+    elevenlabs:
+      base-url: ${ELEVENLABS_BASE_URL:https://api.elevenlabs.io}
+      api-key: ${ELEVENLABS_API_KEY:}
+      voice-id: ${ELEVENLABS_VOICE_ID:pNInz6obpgDQGcFmaJgB}
+      model: ${ELEVENLABS_MODEL:eleven_v3}
+      language-code: vi
+      output-format: mp3_44100_128
+      timeout-seconds: ${TTS_TIMEOUT_SECONDS:120}
 
 server:
   port: 8080
