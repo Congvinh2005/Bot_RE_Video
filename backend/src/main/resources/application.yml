@@ -18,6 +18,10 @@ spring:
     enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: true
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
 
 app:
   storage:
@@ -26,6 +30,11 @@ app:
     secret-key: ${S3_SECRET_KEY:minioadmin}
     bucket: ${S3_BUCKET:aivideo}
     url-expiry-hours: ${S3_URL_EXPIRY_HOURS:168}
+  upload:
+    max-file-size-mb: ${MAX_UPLOAD_MB:500}
+    allowed-extensions: mp4,mov,webm
+    allowed-mime-types: video/mp4,video/quicktime,video/webm
+    ffprobe-path: ${FFPROBE_PATH:ffprobe}
 
 server:
   port: 8080
