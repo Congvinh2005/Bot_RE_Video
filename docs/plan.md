@@ -51,7 +51,7 @@ flowchart TB
 - [X] TASK 01 — Phân tích project + Architecture
 - [X] TASK 02 — Database Design
 - [X] TASK 03 — Project Management API
-- [ ] TASK 04 — Media Storage Abstraction
+- [X] TASK 04 — Media Storage Abstraction
 - [ ] TASK 05 — Video Upload + FFprobe Foundation
 - [ ] TASK 06 — TikTok Source Analyzer
 - [ ] TASK 07 — Product Context Analyzer
