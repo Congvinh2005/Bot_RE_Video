@@ -35,6 +35,11 @@ app:
     allowed-extensions: mp4,mov,webm
     allowed-mime-types: video/mp4,video/quicktime,video/webm
     ffprobe-path: ${FFPROBE_PATH:ffprobe}
+  ai:
+    base-url: ${AI_BASE_URL:https://api.openai.com/v1}
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:gpt-4o-mini}
+    timeout-seconds: ${AI_TIMEOUT_SECONDS:60}
 
 server:
   port: 8080

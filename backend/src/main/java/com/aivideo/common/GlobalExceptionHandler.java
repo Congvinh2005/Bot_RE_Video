@@ -1,5 +1,6 @@
 package com.aivideo.common;
 
+import com.aivideo.ai.AiException;
 import com.aivideo.common.exception.BadRequestException;
 import com.aivideo.common.exception.ResourceNotFoundException;
 import com.aivideo.media.StorageException;
@@ -55,6 +56,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(StorageException.class)
     public ResponseEntity<ApiError> handleStorage(StorageException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
+    }
+
+    @ExceptionHandler(AiException.class)
+    public ResponseEntity<ApiError> handleAi(AiException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                 .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
     }
 
