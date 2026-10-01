@@ -40,6 +40,12 @@ app:
     api-key: ${AI_API_KEY:}
     model: ${AI_MODEL:gpt-4o-mini}
     timeout-seconds: ${AI_TIMEOUT_SECONDS:60}
+  analysis:
+    scene-threshold: ${SCENE_THRESHOLD:0.4}
+    max-frames: ${ANALYSIS_MAX_FRAMES:5}
+    ffmpeg-path: ${FFMPEG_PATH:ffmpeg}
+    prompt-version: ${ANALYSIS_PROMPT_VERSION:1}
+    language: vi
 
 server:
   port: 8080

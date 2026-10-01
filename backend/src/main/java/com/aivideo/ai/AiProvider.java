@@ -13,4 +13,17 @@ public interface AiProvider {
     String analyzeImage(String prompt, byte[] image, String mimeType);
 
     String analyzeVideoContext(String prompt, Map<String, Object> videoContext);
+
+    /** Video context -> structured JSON validate theo schema. */
+    default <T> T analyzeVideoContextStructured(String prompt, Map<String, Object> videoContext,
+                                                com.fasterxml.jackson.databind.ObjectMapper objectMapper,
+                                                Class<T> responseType) {
+        String json = analyzeVideoContext(prompt, videoContext);
+        try {
+            return objectMapper.readValue(json, responseType);
+        } catch (Exception e) {
+            throw new AiException("AI_PROVIDER_ERROR",
+                    "AI returned invalid structured output", e);
+        }
+    }
 }
