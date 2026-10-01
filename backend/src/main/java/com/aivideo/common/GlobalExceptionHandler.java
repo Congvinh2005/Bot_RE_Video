@@ -1,6 +1,7 @@
 package com.aivideo.common;
 
 import com.aivideo.common.exception.ResourceNotFoundException;
+import com.aivideo.media.StorageException;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +39,15 @@ public class GlobalExceptionHandler {
                 .body(new ApiError("VALIDATION_ERROR", "Request validation failed", details, traceId()));
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ApiError> handleUnreadable(HttpMessageNotReadableException ex) {
+    @ExceptionHandler(HttpMessageNotReadableException.class)    public ResponseEntity<ApiError> handleUnreadable(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest()
                 .body(new ApiError("INVALID_REQUEST", "Malformed request body", null, traceId()));
+    }
+
+    @ExceptionHandler(StorageException.class)
+    public ResponseEntity<ApiError> handleStorage(StorageException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
     }
 
     @ExceptionHandler(Exception.class)
