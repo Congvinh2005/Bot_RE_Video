@@ -1,5 +1,6 @@
 package com.aivideo.common;
 
+import com.aivideo.common.exception.BadRequestException;
 import com.aivideo.common.exception.ResourceNotFoundException;
 import com.aivideo.media.StorageException;
 import com.aivideo.source.VideoUploadException;
@@ -21,6 +22,12 @@ public class GlobalExceptionHandler {
     private String traceId() {
         String traceId = MDC.get(TraceIdFilter.TRACE_ID);
         return traceId != null ? traceId : UUID.randomUUID().toString();
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiError> handleBadRequest(BadRequestException ex) {
+        return ResponseEntity.badRequest()
+                .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
