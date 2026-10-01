@@ -53,7 +53,7 @@ flowchart TB
 - [X] TASK 03 — Project Management API
 - [X] TASK 04 — Media Storage Abstraction
 - [X] TASK 05 — Video Upload + FFprobe Foundation
-- [ ] TASK 06 — TikTok Source Analyzer
+- [X] TASK 06 — TikTok Source Analyzer
 - [ ] TASK 07 — Product Context Analyzer
 - [ ] TASK 08 — AI Provider Abstraction
 - [ ] TASK 09 — Video Analysis Pipeline
