@@ -46,6 +46,9 @@ app:
     ffmpeg-path: ${FFMPEG_PATH:ffmpeg}
     prompt-version: ${ANALYSIS_PROMPT_VERSION:1}
     language: vi
+  content:
+    prompt-version: ${CONTENT_PROMPT_VERSION:1}
+    language: vi
 
 server:
   port: 8080
