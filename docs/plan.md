@@ -46,9 +46,32 @@ flowchart TB
 
 ---
 
+## Tiến độ (làm xong task nào [X] task đấy)
+
+- [X] TASK 01 — Phân tích project + Architecture
+- [X] TASK 02 — Database Design
+- [ ] TASK 03 — Project Management API
+- [ ] TASK 04 — Media Storage Abstraction
+- [ ] TASK 05 — Video Upload + FFprobe Foundation
+- [ ] TASK 06 — TikTok Source Analyzer
+- [ ] TASK 07 — Product Context Analyzer
+- [ ] TASK 08 — AI Provider Abstraction
+- [ ] TASK 09 — Video Analysis Pipeline
+- [ ] TASK 10 — Unified Context Engine
+- [ ] TASK 11 — AI Content Generation
+- [ ] TASK 12 — TTS (ADAM Voice)
+- [ ] TASK 13 — Subtitle Generation
+- [ ] TASK 14 — FFmpeg Composition
+- [ ] TASK 15 — Background Video Generation + Status
+- [ ] TASK 16 — Frontend Dashboard
+- [ ] TASK 17 — Result Editor
+- [ ] TASK 18 — Production Hardening
+
+---
+
 ## Phase 1 — Foundation
 
-### TASK 01 — Phân tích project + Architecture ✅ (task hiện tại)
+### [X] TASK 01 — Phân tích project + Architecture
 - **Mục tiêu:** Không code. Phân tích repo, chốt architecture cuối.
 - **Kiểm tra:** cấu trúc project, Java/Spring version, frontend, database, Docker, dependencies.
 - **Tạo:** `docs/architecture.md` (Component, Backend packages, DB overview, AI, Video processing, Deployment + Mermaid).
@@ -56,7 +79,7 @@ flowchart TB
 - **DoD:** Báo cáo Current / Proposed / Files sẽ tạo / Dependencies cần thêm.
 - **Kết quả:** Repo trống (chỉ `master.md`); máy có Java 21.0.9, Maven 3.9.16, Docker 29.5.3, Node 26 → greenfield, khởi tạo từ zero.
 
-### TASK 02 — Database Design
+### [X] TASK 02 — Database Design
 - **Mục tiêu:** Thiết kế DB cho 10 entities: User, Project, VideoSource, Product, VideoAnalysis, ContentGeneration, VoiceGeneration, VideoJob, MediaAsset, GeneratedVideo, ExportTask.
 - **Files:** `backend/.../user|project|source|product|analysis|content|voice|video|job|export/*.java` (Entity+Repository), `src/main/resources/db/migration/V1__init.sql`, `docs/database.md` + ERD Mermaid.
 - **Implement:** JPA/Hibernate, Flyway, quan hệ (User 1-N Project 1-N …), index (`project_id,status,created_at`), JSONB cho analysis/content result. Không lưu video binary vào Postgres.
