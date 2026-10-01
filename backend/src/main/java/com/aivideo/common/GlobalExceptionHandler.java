@@ -2,6 +2,7 @@ package com.aivideo.common;
 
 import com.aivideo.common.exception.ResourceNotFoundException;
 import com.aivideo.media.StorageException;
+import com.aivideo.source.VideoUploadException;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(StorageException.class)
     public ResponseEntity<ApiError> handleStorage(StorageException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
+    }
+
+    @ExceptionHandler(VideoUploadException.class)
+    public ResponseEntity<ApiError> handleUpload(VideoUploadException ex) {
+        return ResponseEntity.status(ex.getStatus())
                 .body(new ApiError(ex.getCode(), ex.getMessage(), null, traceId()));
     }
 
