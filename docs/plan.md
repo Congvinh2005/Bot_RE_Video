@@ -64,7 +64,7 @@ flowchart TB
 - [X] TASK 14 — FFmpeg Composition
 - [X] TASK 15 — Background Video Generation + Status
 - [X] TASK 16 — Frontend Dashboard
-- [ ] TASK 17 — Result Editor
+- [X] TASK 17 — Result Editor
 - [ ] TASK 18 — Production Hardening
 
 ---
