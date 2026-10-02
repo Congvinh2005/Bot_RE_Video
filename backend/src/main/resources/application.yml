@@ -47,7 +47,7 @@ app:
     prompt-version: ${ANALYSIS_PROMPT_VERSION:1}
     language: vi
   content:
-    prompt-version: ${CONTENT_PROMPT_VERSION:1}
+    prompt-version: ${CONTENT_PROMPT_VERSION:2}
     language: vi
   tts:
     elevenlabs:
@@ -60,6 +60,13 @@ app:
       timeout-seconds: ${TTS_TIMEOUT_SECONDS:120}
   subtitle:
     max-chars-per-line: 42
+  video:
+    ffmpeg-path: ${FFMPEG_PATH:ffmpeg}
+    font-path: ${VIDEO_FONT_PATH:/System/Library/Fonts/Helvetica.ttc}
+    width: 1080
+    height: 1920
+    fps: 30
+    max-duration-seconds: 30
 
 server:
   port: 8080
