@@ -58,6 +58,8 @@ app:
       language-code: vi
       output-format: mp3_44100_128
       timeout-seconds: ${TTS_TIMEOUT_SECONDS:120}
+  subtitle:
+    max-chars-per-line: 42
 
 server:
   port: 8080
