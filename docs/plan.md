@@ -65,7 +65,7 @@ flowchart TB
 - [X] TASK 15 — Background Video Generation + Status
 - [X] TASK 16 — Frontend Dashboard
 - [X] TASK 17 — Result Editor
-- [ ] TASK 18 — Production Hardening
+- [X] TASK 18 — Production Hardening
 
 ---
 
