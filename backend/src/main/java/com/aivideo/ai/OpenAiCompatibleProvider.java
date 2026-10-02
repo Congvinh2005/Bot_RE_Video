@@ -3,6 +3,7 @@ package com.aivideo.ai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -25,6 +26,7 @@ public class OpenAiCompatibleProvider implements AiProvider {
     private final ObjectMapper objectMapper;
     private final RestClient restClient;
 
+    @Autowired
     public OpenAiCompatibleProvider(AiProperties properties, ObjectMapper objectMapper) {
         this(properties, objectMapper, buildClient(properties));
     }

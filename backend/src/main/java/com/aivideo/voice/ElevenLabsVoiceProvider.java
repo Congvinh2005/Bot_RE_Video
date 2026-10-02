@@ -1,6 +1,7 @@
 package com.aivideo.voice;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class ElevenLabsVoiceProvider implements VoiceProvider {
     private final ElevenLabsProperties properties;
     private final RestClient restClient;
 
+    @Autowired
     public ElevenLabsVoiceProvider(ElevenLabsProperties properties) {
         this(properties, buildClient(properties));
     }
