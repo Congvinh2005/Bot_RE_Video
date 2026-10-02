@@ -125,6 +125,43 @@ class ContentServiceTest {
     }
 
     @Test
+    void updateCreatesNewVersionKeepingUneditedFields() {
+        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+        ContentGeneration latest = ContentGeneration.builder().project(project)
+                .version(2).hook("Old hook").script("Old script").caption("Old cap")
+                .hashtags(java.util.List.of("#old")).cta("Old cta").build();
+        when(contentGenerationRepository.findByProjectIdOrderByVersionDesc(projectId))
+                .thenReturn(java.util.List.of(latest));
+        when(contentGenerationRepository.save(any(ContentGeneration.class)))
+                .thenAnswer(inv -> {
+                    ContentGeneration g = inv.getArgument(0);
+                    g.setId(UUID.randomUUID());
+                    return g;
+                });
+
+        com.aivideo.content.dto.ContentResponse response = service.updateContent(projectId,
+                new com.aivideo.content.dto.UpdateContentRequest(
+                        null, "New script", null, null, null));
+
+        assertThat(response.version()).isEqualTo(3);
+        assertThat(response.script()).isEqualTo("New script");
+        assertThat(response.hook()).isEqualTo("Old hook");
+        assertThat(response.caption()).isEqualTo("Old cap");
+    }
+
+    @Test
+    void updateWithoutExistingContentThrows() {
+        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+        when(contentGenerationRepository.findByProjectIdOrderByVersionDesc(projectId))
+                .thenReturn(java.util.List.of());
+
+        assertThatThrownBy(() -> service.updateContent(projectId,
+                new com.aivideo.content.dto.UpdateContentRequest(
+                        null, "x", null, null, null)))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
     void missingProjectThrows() {
         when(projectRepository.findById(projectId)).thenReturn(Optional.empty());
 

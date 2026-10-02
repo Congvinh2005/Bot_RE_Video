@@ -19,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,6 +65,22 @@ class ContentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.hook").value("Hook!"));
+    }
+
+    @Test
+    void updateReturns200WithNewVersion() throws Exception {
+        UUID projectId = UUID.randomUUID();
+        ContentResponse updated = new ContentResponse(UUID.randomUUID(), projectId, 3,
+                "H", "New script", "C", List.of(), "CTA", List.of(), Instant.now());
+        when(contentService.updateContent(eq(projectId), any())).thenReturn(updated);
+
+        mockMvc.perform(put("/api/projects/{id}/content", projectId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                Map.of("script", "New script"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.version").value(3))
+                .andExpect(jsonPath("$.script").value("New script"));
     }
 
     @Test
