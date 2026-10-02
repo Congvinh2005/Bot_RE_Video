@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import CreateProject from './pages/CreateProject';
 import ProjectDetail from './pages/ProjectDetail';
+import ResultPage from './pages/ResultPage';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/new" element={<CreateProject />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
+          <Route path="/projects/:id/result" element={<ResultPage />} />
           <Route path="*" element={<p>Không tìm thấy trang.</p>} />
         </Routes>
       </main>
