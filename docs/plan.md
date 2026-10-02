@@ -62,7 +62,7 @@ flowchart TB
 - [X] TASK 12 — TTS (ADAM Voice)
 - [X] TASK 13 — Subtitle Generation
 - [X] TASK 14 — FFmpeg Composition
-- [ ] TASK 15 — Background Video Generation + Status
+- [X] TASK 15 — Background Video Generation + Status
 - [ ] TASK 16 — Frontend Dashboard
 - [ ] TASK 17 — Result Editor
 - [ ] TASK 18 — Production Hardening
