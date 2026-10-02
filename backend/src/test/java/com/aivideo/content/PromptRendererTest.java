@@ -55,4 +55,17 @@ class PromptRendererTest {
             assertThat(renderer.load(type, 1).content()).isNotBlank();
         }
     }
+
+    @Test
+    void v2EnforcesTikTokRules() {
+        String content = renderer.load(PromptType.CONTENT_GENERATION, 2).content();
+
+        assertThat(content).contains("3 giây");
+        assertThat(content).contains("15-30");
+        assertThat(content).contains("3-5");
+
+        String caption = renderer.load(PromptType.CAPTION_GENERATION, 2).content();
+
+        assertThat(caption).contains("3-5");
+    }
 }
