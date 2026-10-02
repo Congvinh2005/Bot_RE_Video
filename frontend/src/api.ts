@@ -47,8 +47,19 @@ client.interceptors.response.use(
 
 export function apiErrorMessage(e: unknown): string {
   if (axios.isAxiosError(e)) {
-    const data = e.response?.data as { code?: string; message?: string } | undefined;
-    if (data?.message) return `${data.code ?? 'ERROR'}: ${data.message}`;
+    const data = e.response?.data as
+      | { code?: string; message?: string; details?: unknown }
+      | undefined;
+    if (data?.message) {
+      let msg = `${data.code ?? 'ERROR'}: ${data.message}`;
+      if (data.details && typeof data.details === 'object') {
+        const fields = Object.entries(data.details as Record<string, string>)
+          .map(([k, v]) => `${k}: ${v}`)
+          .join('; ');
+        if (fields) msg += ` (${fields})`;
+      }
+      return msg;
+    }
     return e.message;
   }
   return String(e);
