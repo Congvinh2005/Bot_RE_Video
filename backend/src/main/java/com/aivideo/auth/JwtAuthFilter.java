@@ -26,10 +26,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
+        String token = null;
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
+            token = header.substring(7);
+        } else {
+            // Dự phòng khi client không gửi được header (vd EventSource/SSE):
+            // nhận token qua query param ?token=.
+            String param = request.getParameter("token");
+            if (param != null && !param.isBlank()) {
+                token = param;
+            }
+        }
+        if (token != null) {
             try {
-                Claims claims = jwtService.parseToken(header.substring(7));
+                Claims claims = jwtService.parseToken(token);
                 String role = claims.get("role", String.class);
                 var auth = new UsernamePasswordAuthenticationToken(
                         claims.getSubject(), null,

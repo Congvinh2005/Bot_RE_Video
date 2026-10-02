@@ -65,4 +65,13 @@ class SecuritySmokeTest {
         mockMvc.perform(get("/api/projects").header("Authorization", "Bearer bad-token"))
                 .andExpect(status().isUnauthorized());
     }
+
+    @Test
+    void streamAcceptsTokenQueryParam() throws Exception {
+        when(jwtService.parseToken("good-token")).thenReturn(
+                Jwts.claims().subject("a@b.com").add("role", "USER").build());
+
+        mockMvc.perform(get("/api/projects").param("token", "good-token"))
+                .andExpect(status().isOk());
+    }
 }

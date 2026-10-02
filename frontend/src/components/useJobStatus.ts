@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import client from '../api';
+import client, { getToken } from '../api';
 import type { JobStatus } from '../types';
 
 const TERMINAL = ['COMPLETED', 'FAILED', 'CANCELLED'];
@@ -30,7 +30,12 @@ export function useJobStatus(projectId: string, active: boolean) {
 
     let es: EventSource | null = null;
     try {
-      es = new EventSource(`/api/projects/${projectId}/status/stream`);
+      // EventSource không gửi được header Authorization -> kèm token qua query.
+      const token = getToken();
+      const url =
+        `/api/projects/${projectId}/status/stream` +
+        (token ? `?token=${encodeURIComponent(token)}` : '');
+      es = new EventSource(url);
       es.onmessage = (ev) => {
         if (stopped) return;
         try {
