@@ -3,6 +3,7 @@ package com.aivideo.content;
 import com.aivideo.ai.AiProvider;
 import com.aivideo.common.exception.ResourceNotFoundException;
 import com.aivideo.content.dto.ContentResponse;
+import com.aivideo.content.dto.UpdateContentRequest;
 import com.aivideo.project.Project;
 import com.aivideo.project.ProjectRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -70,6 +71,31 @@ public class ContentService {
                 .result(toMap(result))
                 .build());
         log.info("AI_CONTENT_OK project={} version={}", projectId, version);
+        return ContentResponse.from(saved);
+    }
+
+    @Transactional
+    public ContentResponse updateContent(UUID projectId, UpdateContentRequest request) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("PROJECT_NOT_FOUND",
+                        "Project not found: " + projectId));
+        ContentGeneration latest = contentGenerationRepository
+                .findByProjectIdOrderByVersionDesc(projectId).stream()
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("CONTENT_NOT_FOUND",
+                        "No content to edit for project: " + projectId));
+        ContentGeneration saved = contentGenerationRepository.save(ContentGeneration.builder()
+                .project(project)
+                .version(latest.getVersion() + 1)
+                .hook(request.hook() != null ? request.hook() : latest.getHook())
+                .script(request.script() != null ? request.script() : latest.getScript())
+                .caption(request.caption() != null ? request.caption() : latest.getCaption())
+                .hashtags(request.hashtags() != null ? request.hashtags() : latest.getHashtags())
+                .cta(request.cta() != null ? request.cta() : latest.getCta())
+                .scenes(latest.getScenes())
+                .result(latest.getResult())
+                .build());
+        log.info("CONTENT_EDIT_OK project={} version={}", projectId, saved.getVersion());
         return ContentResponse.from(saved);
     }
 
