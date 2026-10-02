@@ -4,6 +4,11 @@ target/
 *.jar
 *.war
 
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
 # Spring Boot
 *.log
 
